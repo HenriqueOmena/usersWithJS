@@ -172,7 +172,7 @@ class UserController{
 
         tr.dataset.user = JSON.stringify(dataUser);
 
-       tr.innerHTML = 
+        tr.innerHTML = 
         `
             <tr>
                 <td>
@@ -190,9 +190,21 @@ class UserController{
         `;
 
         tr.querySelector('.btn-edit').addEventListener('click', e=>{
+            let json = JSON.parse(tr.dataset.user);
+            let form = document.querySelector('#form-user-update')
 
-            console.log(JSON.parse(tr.dataset.user));
-            
+            for (let name in json){
+
+                let field = form.querySelector("[name=" + name.replace("_", "") + "]");
+                
+                if (field) {
+
+                    if (field.type == 'file') continue;
+                    field.value = json[name];    
+
+                }
+
+            }
             this.showPanelUpdate();
 
         });
