@@ -20,6 +20,7 @@ class UserController{
 
     }
 
+    
     onSubmit(){
 
         this.formEl.addEventListener("submit", event => {
@@ -119,20 +120,16 @@ class UserController{
         [...this.formEl.elements].forEach( (field, index) => {
 
             if (['name', 'email'].indexOf(field.name) > -1 && !field.value) {
-                
                 field.parentElement.classList.add('has-error');
                 isValid = false;
-                
-
             }
         
 
             if (field.name == "gender") {
-        
                 if (field.checked ) {
                     user[field.name] = field.value;
                 }
-        
+                //console.log(field.value)
            }else if (field.name == "admin"){
 
                 user[field.name] = field.checked;
@@ -179,6 +176,7 @@ class UserController{
                     <img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm">
                 </td>
                 <td>${dataUser.name}</td>
+                <td class="text-primary">${dataUser.gender}</td>
                 <td>${dataUser.email}</td>
                 <td>${(dataUser.admin) ? 'Sim' : 'Não' }</td>
                 <td>${Utils.dateFormat(dataUser.register)}</td>
@@ -192,25 +190,42 @@ class UserController{
         tr.querySelector('.btn-edit').addEventListener('click', e=>{
             let json = JSON.parse(tr.dataset.user);
             let form = document.querySelector('#form-user-update')
-
+            console.log(json['_gender'])
             for (let name in json){
 
                 let field = form.querySelector("[name=" + name.replace("_", "") + "]");
-                
+                console.log(json)
                 if (field) {
 
-                    if (field.type == 'file') continue;
-                    field.value = json[name];    
+                    switch (field.type) {
+                        case 'file':
+                            case 'file':
+                            continue;
+                            break;
+                        case 'radio':
+                            field = form.querySelector("[name=" + name.replace("_", "") + "][value=" +json['_name'] + "]");
+                            field.checked = true;
+                            console.log(field)
+                            break;
+                            
+                            case 'checkbox':
+                            field.checked = json[name];
+                            break;
+                            
+                            default:
+                            field.value = json[name];
+                        }
+                        console.log(field)
 
                 }
 
             }
+
             this.showPanelUpdate();
 
         });
 
         this.tableEl.appendChild(tr);
-
         this.updateCount();
 
     }    
