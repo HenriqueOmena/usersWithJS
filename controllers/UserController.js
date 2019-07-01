@@ -1,7 +1,7 @@
 class UserController{
 
     constructor(formId, tableId){
-        
+
         this.formEl = document.getElementById(formId);
         this.tableEl = document.getElementById(tableId);
 
@@ -20,7 +20,7 @@ class UserController{
 
     }
 
-    
+
     onSubmit(){
 
         this.formEl.addEventListener("submit", event => {
@@ -28,7 +28,7 @@ class UserController{
             event.preventDefault();
 
             let btn = this.formEl.querySelector('[type=submit]');
-            
+
             btn.disabled = true;
 
             let values = this.getValues();
@@ -47,8 +47,8 @@ class UserController{
 
                     btn.disabled = false;
 
-                    
-                
+
+
                 },
                 (e) =>{
 
@@ -75,7 +75,7 @@ class UserController{
             let fileReader = new FileReader();
 
             let elements = [...this.formEl.elements].filter( item => {
-            
+
 
                 if (item.name === 'photo') {
                     return item;
@@ -102,12 +102,12 @@ class UserController{
                 fileReader.readAsDataURL(file);
 
             } else {
-                
+
                 resolve('dist/img/boxed-bg.jpg');
 
             }
-            
-            
+
+
         });
 
     }
@@ -123,7 +123,7 @@ class UserController{
                 field.parentElement.classList.add('has-error');
                 isValid = false;
             }
-        
+
 
             if (field.name == "gender") {
                 if (field.checked ) {
@@ -135,17 +135,17 @@ class UserController{
                 user[field.name] = field.checked;
 
            }
-            else{ 
-        
+            else{
+
                 user[field.name] = field.value
-        
+
             }
-        
+
         });
-        
+
         if (!isValid){
 
-            return false; 
+            return false;
 
         }
 
@@ -162,18 +162,18 @@ class UserController{
 
     }
 
-    
+
     addLine(dataUser) {
 
         let tr = document.createElement('tr');
 
         tr.dataset.user = JSON.stringify(dataUser);
 
-        tr.innerHTML = 
+        tr.innerHTML =
         `
             <tr>
                 <td>
-                    <img src="${dataUser.photo}" alt="User Image" class="img-circle img-sm">
+                    <img src="../${dataUser.photo}" alt="User Image" class="img-circle img-sm">
                 </td>
                 <td>${dataUser.name}</td>
                 <td class="text-primary">${dataUser.gender}</td>
@@ -207,11 +207,11 @@ class UserController{
                             field.checked = true;
                             console.log(field)
                             break;
-                            
+
                             case 'checkbox':
                             field.checked = json[name];
                             break;
-                            
+
                             default:
                             field.value = json[name];
                         }
@@ -228,7 +228,7 @@ class UserController{
         this.tableEl.appendChild(tr);
         this.updateCount();
 
-    }    
+    }
 
     showPanelCreate(){
 
@@ -243,7 +243,7 @@ class UserController{
         document.querySelector('#box-user-update').style.display = 'block';
 
     }
-     
+
     updateCount(){
 
         let numberUsers = 0;
@@ -256,7 +256,7 @@ class UserController{
             let user = JSON.parse(tr.dataset.user);
 
             if(user._admin) numberAdmin++;
-             
+
 
         });
 
