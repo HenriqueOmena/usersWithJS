@@ -27,7 +27,7 @@ class UserController{
                     field.value = 'Henrique Omena';
                     break;
                 case 'date':
-                    field.value = '1988-02-02';
+                    //field.value = '1988-02-02';
                     break;
                 case 'select-one':
                     field.value = 'Brazil';
@@ -283,14 +283,14 @@ class UserController{
 
                     switch (field.type) {
                         case 'file':
-                            case 'file':
-                            continue;
-                            break;
+                        continue;
+
                         case 'radio':
-                            field = form.querySelector("[name=" + name.replace("_", "") + "][value=" +json['_name'] + "]");
+                            // field = form.querySelector(
+                            //     "[name=" + name.replace("_", "") + "][value=" +json[name] + "]"
+                            // );
                             field.checked = true;
-                            console.log(field)
-                            break;
+                        break;
 
                         case 'checkbox':
                             field.checked = json[name];
@@ -299,7 +299,6 @@ class UserController{
                         default:
                             field.value = json[name];
                         }
-                        console.log(field)
 
                 }
 
