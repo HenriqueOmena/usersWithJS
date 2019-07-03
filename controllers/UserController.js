@@ -14,11 +14,11 @@ class UserController{
 
     fillForm(){
         let boxInputs = document.querySelectorAll('#form-user-create .form-group')
-        console.log('boxInputs:', boxInputs)
+
         boxInputs.forEach( el => {
             let field = el.querySelector("[name]");
 
-            console.log(field.type);
+            //console.log(field.type);
             switch (field.type) {
                 // case 'file':
                 //     case 'file':
@@ -86,7 +86,7 @@ class UserController{
                         result._photo = content;
                     }
 
-                    tr.dataset.user = JSON.stringify(retult)
+                    tr.dataset.user = JSON.stringify(result)
                     tr.innerHTML =
                     `
                         <tr>
@@ -144,7 +144,7 @@ class UserController{
                 content => {
 
                     values.photo = content;
-                    console.log(content);
+                    console.log('coneudo da photo', content);
                     this.addLine(values);
 
                     this.formCreateEl.reset();
@@ -176,6 +176,7 @@ class UserController{
 
             let fileReader = new FileReader();
 
+            // para cada item do formulario retiro apenas o elemento que preciso no caso o  PHOTO
             let elements = [...formEl.elements].filter( item => {
 
                 if (item.name === 'photo') {
@@ -204,7 +205,7 @@ class UserController{
 
             } else {
 
-                resolve('dist/img/boxed-bg.jpg');
+                resolve('../dist/img/boxed-bg.jpg');
 
             }
 
@@ -300,11 +301,11 @@ class UserController{
             let json = JSON.parse(tr.dataset.user);
 
             this.formUpdateEl.dataset.trIndex = tr.sectionRowIndex;
-            console.log(json['_gender'])
+
             for (let name in json){
 
                 let field = this.formUpdateEl.querySelector("[name=" + name.replace("_", "") + "]");
-                console.log(json)
+
                 if (field) {
 
                     switch (field.type) {
