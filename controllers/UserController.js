@@ -8,51 +8,12 @@ class UserController{
 
         this.onSubmit();
         this.onEdit();
-        this.fillForm();
-
+        Form.fill();
     }
 
-    fillForm(){
-        let boxInputs = document.querySelectorAll('#form-user-create .form-group')
 
-        boxInputs.forEach( el => {
-            let field = el.querySelector("[name]");
-
-            //console.log(field.type);
-            switch (field.type) {
-                // case 'file':
-                //     case 'file':
-                //     break;
-                case 'text':
-                    field.value = 'Henrique Omena';
-                    break;
-                case 'date':
-                    //field.value = '1988-02-02';
-                    break;
-                case 'select-one':
-                    field.value = 'Brazil';
-                    break;
-                case 'email':
-                    field.value = 'henrique.omena@acin.pt';
-                    break;
-                case 'password':
-                    field.value = '12345';
-                    break;
-                case 'file':
-                    field.photo = 'dist/img/boxed-bg.jpg';
-                    break;
-                // case 'radio':
-                //     break;
-                case 'checkbox':
-                    field.checked = true;
-                break;
-
-            }
-        })
-    }
 
     onEdit(){
-
         document.querySelector('#box-user-update .btn-cancel').addEventListener('click', e => {
 
             this.showPanelCreate();
@@ -297,6 +258,16 @@ class UserController{
     }
 
     addEventsTr(tr){
+        const btnDelete = tr.querySelector('.btn-danger')
+
+        if (btnDelete) {
+            btnDelete.addEventListener('click', e => {
+                if (confirm('Deseja realmente Excluir?')){
+                    tr.remove();
+                }
+            });
+        }
+
         tr.querySelector('.btn-edit').addEventListener('click', e => {
             let json = JSON.parse(tr.dataset.user);
 
@@ -373,4 +344,45 @@ class UserController{
 
     }
 
+}
+
+class Form {
+    static fill(formSelector = '#form-user-create .form-group' ){
+        let boxInputs = document.querySelectorAll(formSelector)
+
+        boxInputs.forEach( el => {
+            let field = el.querySelector("[name]");
+
+            //console.log(field.type);
+            switch (field.type) {
+                // case 'file':
+                //     case 'file':
+                //     break;
+                case 'text':
+                    field.value = 'Henrique Omena';
+                    break;
+                case 'date':
+                    //field.value = '1988-02-02';
+                    break;
+                case 'select-one':
+                    field.value = 'Brazil';
+                    break;
+                case 'email':
+                    field.value = 'henrique.omena@acin.pt';
+                    break;
+                case 'password':
+                    field.value = '12345';
+                    break;
+                case 'file':
+                    field.photo = 'dist/img/boxed-bg.jpg';
+                    break;
+                // case 'radio':
+                //     break;
+                case 'checkbox':
+                    field.checked = true;
+                break;
+
+            }
+        })
+    }
 }
