@@ -8,6 +8,7 @@ class UserController{
 
         this.onSubmit();
         this.onEdit();
+        this.selecetAll();
         Form.fill();
     }
 
@@ -105,7 +106,7 @@ class UserController{
                 content => {
 
                     values.photo = content;
-                    console.log('coneudo da photo', content);
+
                     this.addLine(values);
 
                     this.formCreateEl.reset();
@@ -224,11 +225,44 @@ class UserController{
         );
 
     }
+    getUsersStorage() {
+        let users = [];
 
+        if (sessionStorage.getItem('users')) {
+            users = JSON.parse(sessionStorage.getItem(('users')))
+        }
+
+        return users
+    }
+    selecetAll() {
+        let users = this.getUsersStorage();
+
+        users.forEach( dataUser => {
+
+            let user = new User();
+
+            user.loadFromJSON(dataUser);
+
+            this.addLine(dataUser)
+
+        })
+
+    }
+
+    insert(data) {
+
+        let users = this.getUsersStorage();
+        users.push(data);
+
+        sessionStorage.setItem("key", "value")
+
+    }
 
     addLine(dataUser) {
 
         let tr = document.createElement('tr');
+        console.log(dataUser);
+        this.insert(dataUser)
 
         tr.dataset.user = JSON.stringify(dataUser);
 
@@ -264,6 +298,8 @@ class UserController{
             btnDelete.addEventListener('click', e => {
                 if (confirm('Deseja realmente Excluir?')){
                     tr.remove();
+
+                    this.updateCount();
                 }
             });
         }
@@ -362,7 +398,7 @@ class Form {
                     field.value = 'Henrique Omena';
                     break;
                 case 'date':
-                    //field.value = '1988-02-02';
+                    field.value = new Date('1988-02-02').toISOString().substring(0, 10)
                     break;
                 case 'select-one':
                     field.value = 'Brazil';
@@ -376,8 +412,8 @@ class Form {
                 case 'file':
                     field.photo = 'dist/img/boxed-bg.jpg';
                     break;
-                // case 'radio':
-                //     break;
+                case 'radio':
+                    break;
                 case 'checkbox':
                     field.checked = true;
                 break;

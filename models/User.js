@@ -25,44 +25,44 @@ class User{
         return this._name;
 
     }
-    
-    
+
+
     get gender(){
 
         return this._gender;
 
     }
-    
+
     get birth(){
 
         return this._birth;
 
     }
-    
+
     get country(){
 
         return this._country;
 
     }
-    
+
     get email(){
 
         return this._email;
 
     }
-    
+
     get photo(){
 
         return this._photo;
 
     }
-    
+
     get password(){
 
         return this._password;
 
     }
-    
+
     get admin(){
 
         return this._admin;
@@ -76,4 +76,11 @@ class User{
 
     }
 
+    loadFromJSON(json) {
+        for (let name in json){
+
+            this[name] = json[name];
+
+        }
+    }
 }
