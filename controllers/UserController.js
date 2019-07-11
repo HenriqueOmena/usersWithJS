@@ -8,7 +8,7 @@ class UserController{
 
         this.onSubmit();
         this.onEdit();
-        this.selecetAll();
+        this.selectAll();
         Form.fill();
     }
 
@@ -139,6 +139,8 @@ class UserController{
             let fileReader = new FileReader();
 
             // para cada item do formulario retiro apenas o elemento que preciso no caso o  PHOTO
+
+            console.log('FORM EL', formEl);
             let elements = [...formEl.elements].filter( item => {
 
                 if (item.name === 'photo') {
@@ -146,7 +148,7 @@ class UserController{
                 }
 
             });
-
+            console.log('ELEMENTS', elements);
             let file = elements[0].files[0];
 
             fileReader.onload = () => {
@@ -234,10 +236,12 @@ class UserController{
 
         return users
     }
-    selecetAll() {
+
+    selectAll() {
         let users = this.getUsersStorage();
 
         users.forEach( dataUser => {
+
 
             let user = new User();
 
@@ -261,7 +265,8 @@ class UserController{
     addLine(dataUser) {
 
         let tr = document.createElement('tr');
-        console.log(dataUser);
+        //console.log(dataUser);
+
         this.insert(dataUser)
 
         tr.dataset.user = JSON.stringify(dataUser);
@@ -337,7 +342,7 @@ class UserController{
                 }
 
             }
-            console.log('teste', this.formUpdateEl.querySelector(".photo").src = json._photo);
+            //console.log('teste', this.formUpdateEl.querySelector(".photo").src = json._photo);
             this.formUpdateEl.querySelector(".photo").src = json._photo;
 
             this.showPanelUpdate();
