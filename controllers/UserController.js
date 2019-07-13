@@ -140,17 +140,18 @@ class UserController{
 
             // para cada item do formulario retiro apenas o elemento que preciso no caso o  PHOTO
 
-            console.log('FORM EL', formEl);
-            let elements = [...formEl.elements].filter( item => {
+            console.log('FORM EL', Array.from(formEl.elements));
+            let elements = [...Array.from(formEl).elements].filter( item => {
 
                 if (item.name === 'photo') {
                     return item;
                 }
 
             });
-            console.log('ELEMENTS', elements);
-            let file = elements[0].files[0];
 
+            //console.log('ELEMENTS', elements);
+            let file = elements[0].files[0];
+            console.log(file)
             fileReader.onload = () => {
 
                 resolve(fileReader.result);
